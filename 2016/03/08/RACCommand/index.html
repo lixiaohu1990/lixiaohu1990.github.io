@@ -65,7 +65,7 @@ RACCommand类用于表示事件的执行，一般来说是在UI上的某些动�
 <meta property="og:site_name" content="一生只做浪漫极客">
 <meta property="og:description" content="RACCommandRACCommand是ReactiveCocoa的基本组件之一，能节省开发的大部分时间，同时使得iOS/OS X 应用更健壮。
 RACCommand类用于表示事件的执行，一般来说是在UI上的某些动作来触发这些事件，比如点击一个按钮。RACCommand的实例能够决定是否可以被执行，这个特性能反应在UI上，而且它能确保在其不可用时不会被执行。通常，当一个命令可以执行时，会将它的属">
-<meta property="og:updated_time" content="2016-03-08T03:05:06.000Z">
+<meta property="og:updated_time" content="2016-03-08T07:54:20.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RACCommand使用指南">
 <meta name="twitter:description" content="RACCommandRACCommand是ReactiveCocoa的基本组件之一，能节省开发的大部分时间，同时使得iOS/OS X 应用更健壮。
@@ -298,6 +298,7 @@ RACCommand类用于表示事件的执行，一般来说是在UI上的某些动�
       
         <h2 id="RACCommand"><a href="#RACCommand" class="headerlink" title="RACCommand"></a>RACCommand</h2><p>RACCommand是ReactiveCocoa的基本组件之一，能节省开发的大部分时间，同时使得iOS/OS X 应用更健壮。</p>
 <p>RACCommand类用于表示事件的执行，一般来说是在UI上的某些动作来触发这些事件，比如点击一个按钮。RACCommand的实例能够决定是否可以被执行，这个特性能反应在UI上，而且它能确保在其不可用时不会被执行。通常，当一个命令可以执行时，会将它的属性allowsConcurrentExecution设置为它的默认值：NO，从而确保在这个命令已经正在执行的时候，不会同时再执行新的操作。命令执行的返回值是一个RACSignal，因此我们能对该返回值进行next:，completed或error:，这在下文会有所展示。</p>
+<a id="more"></a>
 <p><strong>例子应用</strong></p>
 <p>现在假设我们要写一个简单的iOS APP，它能让用户订阅邮件列表。我们将其做到最简单：一个输入框和一个按钮。当用户输入了电子邮箱地址、点击订阅按钮后，电子邮箱地址会提交到我们的web服务器上。够简单了吧！然而，我们还是得处理一些边界情况，以提供最好的体验。比如如果用户点击按钮两次怎么办？错误如何处理？如果邮箱地址非法呢？RACCommand能帮助我们处理这些情况。</p>
 <p>根视图包含了视图，以及引用ViewModel的实例：</p>
