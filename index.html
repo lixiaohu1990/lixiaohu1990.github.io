@@ -241,6 +241,128 @@
             
               
                 
+                <a class="post-title-link" href="/2016/03/08/ReactiveCocoa/" itemprop="url">
+                  ReactiveCocoa全解
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-03-08T14:35:52+08:00" content="2016-03-08">
+              2016-03-08
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/iOS/MVVM/" itemprop="url" rel="index">
+                    <span itemprop="name">MVVM</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="ReactiveCocoa编程思想"><a href="#ReactiveCocoa编程思想" class="headerlink" title="ReactiveCocoa编程思想"></a>ReactiveCocoa编程思想</h2><p>ReactiveCocoa结合了几种编程风格：</p>
+<ul>
+<li>函数式编程（Functional Programming）</li>
+<li>响应式编程（Reactive Programming）</li>
+</ul>
+<p>因此，ReactiveCocoa也被描述为函数响应式编程（FRP）框架。<br>以后使用RAC解决问题，就不需要考虑调用顺序，直接考虑结果，把每一次操作都写成一系列嵌套的方法中，使代码高聚合，方便管理。<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/03/08/ReactiveCocoa/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/03/08/RACCommand/" itemprop="url">
                   RACCommand使用指南
                 </a>
@@ -336,10 +458,10 @@
 </ul>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[[self.viewModel.subscribeCommand execute:nil] subscribeCompleted:^&#123;  </span><br><span class="line">  NSLog(@<span class="string">"Thecommand executed"</span>);   </span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
 <p>在我们的例子中，button自动执行command（所以我们不需要调用-execute:），所以我们得监听command的另一个属性，在command执行时更新UI。在这里有几种选择来达到目的，也许会有点小迷惑。executionSignals是RACCommand的signal，每当command开始执行时next:，其参数是由command创建的signal，所以这个executionSignals是一个值为signal的signal。我们在view model的mapSubscribeCommandStateToStatusMessage方法中，在command每次开始执行时得到一个包含字符串值的signal：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">RACSignal*startedMessageSource = [self.subscribeCommand.executionSignalsmap:^id(RACSignal *subscribeSignal) &#123;  </span><br><span class="line">  returnNSLocalizedString(@<span class="string">"Sending request..."</span>, nil);  </span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">RACSignal*startedMessageSource = [self.subscribeCommand.executionSignalsmap:^id(RACSignal *subscribeSignal) &#123;  </span><br><span class="line">  <span class="keyword">return</span> NSLocalizedString(@<span class="string">"Sending request..."</span>, nil);  </span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
 <p>如果我们想用纯粹的函数在command执行完成后得到一个包含字符串的signal，我们不得不多做一点小工作：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">RACSignal *completedMessageSource =[self.subscribeCommand.executionSignals flattenMap:^RACStream *(RACSignal*subscribeSignal) &#123;  </span><br><span class="line">              <span class="keyword">return</span>[[[subscribeSignal materialize] filter:^BOOL(RACEvent *event) &#123;  </span><br><span class="line">                     returnevent.eventType == RACEventTypeCompleted;  </span><br><span class="line">              &#125;]<span class="built_in">map</span>:^id(id value) &#123;  </span><br><span class="line">                     returnNSLocalizedString(@<span class="string">"Thanks"</span>, nil);  </span><br><span class="line">              &#125;];  </span><br><span class="line">       &#125;];</span><br></pre></td></tr></table></figure>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flattenMap:方法在command执行时，会调用block并传入subscribeSignal，这个block会返回一个新的signal，它的值就在这个要返回的signal中。materialize会将一个signal转换为RACEvent信号（将一个signal的next:complete和error:消息转换为RACEvent实例的next:的值）。接下来我们就过滤这些事件，只留下RACEventTypeCompleted完成事件，并将其<span class="built_in">map</span>成一个字符串值。</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">RACSignal *completedMessageSource =[self.subscribeCommand.executionSignals flattenMap:^RACStream *(RACSignal*subscribeSignal) &#123;  </span><br><span class="line">              <span class="keyword">return</span>[[[subscribeSignal materialize] filter:^BOOL(RACEvent *event) &#123;  </span><br><span class="line">                     returnevent.eventType == RACEventTypeCompleted;  </span><br><span class="line">              &#125;]<span class="built_in">map</span>:^id(id value) &#123;  </span><br><span class="line">                     <span class="keyword">return</span> NSLocalizedString(@<span class="string">"Thanks"</span>, nil);  </span><br><span class="line">              &#125;];  </span><br><span class="line">       &#125;];</span><br></pre></td></tr></table></figure>
+<p>flattenMap:方法在command执行时，会调用block并传入subscribeSignal，这个block会返回一个新的signal，它的值就在这个要返回的signal中。materialize会将一个signal转换为RACEvent信号（将一个signal的next:complete和error:消息转换为RACEvent实例的next:的值）。接下来我们就过滤这些事件，只留下RACEventTypeCompleted完成事件，并将其map成一个字符串值。</p>
 <p>我们可以用一个不同的方法来实现上面这种行为，还可能更容易懂：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@weakify(self);  </span><br><span class="line">[self.subscribeCommand.executionSignals subscribeNext:^(RACSignal*subscribeSignal) &#123;    </span><br><span class="line">   [subscribeSignal subscribeCompleted:^&#123;        </span><br><span class="line">    @strongify(self);       </span><br><span class="line">    self.statusMessage= @<span class="string">"Thanks"</span>;    </span><br><span class="line">   &#125;];   </span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
 <p>我不推荐上面这种方法，因为在block里的是副作用（side effects）。还有，上面的block会referring和retaining self，所以我用了@weakify和@strongify宏（在libextobjc中定义）来避免循环引用。所以为了避免使用这种副作用，还是要尽量采用原始的实现好一些。<br>还有一个要重点注意的是executionSignals属性，这个signals不会发送了error事件，而是由errors这个属性来发送的。在一个command的执行期间，如果一个signal发送了error，这会被signals当成一个next:事件发送，而errors属性则会发送这个错误信息。errors属性不会发送error:事件。我们很容易就能将错误信息map成一个字符串消息：</p>
@@ -808,7 +930,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">4</span>
+              <span class="site-state-item-count">5</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
