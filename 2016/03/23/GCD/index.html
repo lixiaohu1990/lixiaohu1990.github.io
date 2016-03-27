@@ -67,10 +67,10 @@ GCD 能通过推迟昂贵">
 <meta property="og:description" content="GCD 简介CGD 称 Grand Central Dispatch，是一套低层级的C API，通过 GCD，开发者只需要向队列中添加一段代码块(block或C函数指针)，而不需要直接和线程打交道。GCD在后端管理着一个线程池，它不仅决定着你的代码块将在哪个线程被执行，还根据可用的系统资源对这些线程进行管理。这样通过GCD来管理线程，从而解决线程被创建的问题。
 GCD 优势
 GCD 能通过推迟昂贵">
-<meta property="og:image" content="http://yoursite.com/../../public/images/gcd/thread.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/avatar.jpg">
 <meta property="og:image" content="http://yoursite.com/../../public/images/gcd/serial.png">
 <meta property="og:image" content="http://yoursite.com/../../public/images/gcd/concurrent.png">
-<meta property="og:updated_time" content="2016-03-24T15:12:59.000Z">
+<meta property="og:updated_time" content="2016-03-27T02:58:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="GCD 狂想曲之基本用法">
 <meta name="twitter:description" content="GCD 简介CGD 称 Grand Central Dispatch，是一套低层级的C API，通过 GCD，开发者只需要向队列中添加一段代码块(block或C函数指针)，而不需要直接和线程打交道。GCD在后端管理着一个线程池，它不仅决定着你的代码块将在哪个线程被执行，还根据可用的系统资源对这些线程进行管理。这样通过GCD来管理线程，从而解决线程被创建的问题。
@@ -328,7 +328,7 @@ GCD 能通过推迟昂贵">
 <li>Concurrency （并发）&amp; Parallelism（并行）</li>
 </ul>
 <p>并发代码的不同部分可以“同步”执行。然而，该怎样发生或是否发生都取决于系统。多核设备通过并行来同时执行多个线程；然而，为了使单核设备也能实现这一点，它们必须先运行一个线程，执行一个上下文切换，然后运行另一个线程或进程。这通常发生地足够快以致给我们并发执行地错觉。并行则是真正意思上的多任务同时运行。如下图所示：</p>
-<p><img src="../../public/images/gcd/thread.jpg" alt="MacDown logo"></p>
+<p><img src="/uploads/avatar.jpg" alt="MacDown logo"></p>
 <p>虽然我们可以编写代码在GCD下并发执行，但GCD会决定有多少并行的需求。并行要求并发，但并不能保证并发。</p>
 <ul>
 <li>Context Switch （上下文切换）</li>
