@@ -67,10 +67,10 @@ GCD 能通过推迟昂贵">
 <meta property="og:description" content="GCD 简介CGD 称 Grand Central Dispatch，是一套低层级的C API，通过 GCD，开发者只需要向队列中添加一段代码块(block或C函数指针)，而不需要直接和线程打交道。GCD在后端管理着一个线程池，它不仅决定着你的代码块将在哪个线程被执行，还根据可用的系统资源对这些线程进行管理。这样通过GCD来管理线程，从而解决线程被创建的问题。
 GCD 优势
 GCD 能通过推迟昂贵">
-<meta property="og:image" content="http://yoursite.com/uploads/avatar.jpg">
-<meta property="og:image" content="http://yoursite.com/../../public/images/gcd/serial.png">
-<meta property="og:image" content="http://yoursite.com/../../public/images/gcd/concurrent.png">
-<meta property="og:updated_time" content="2016-03-27T02:58:00.000Z">
+<meta property="og:image" content="http://yoursite.com/uploads/gcd/thread.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/gcd/serial.png">
+<meta property="og:image" content="http://yoursite.com/uploads/gcd/concurrent.png">
+<meta property="og:updated_time" content="2016-03-27T03:03:32.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="GCD 狂想曲之基本用法">
 <meta name="twitter:description" content="GCD 简介CGD 称 Grand Central Dispatch，是一套低层级的C API，通过 GCD，开发者只需要向队列中添加一段代码块(block或C函数指针)，而不需要直接和线程打交道。GCD在后端管理着一个线程池，它不仅决定着你的代码块将在哪个线程被执行，还根据可用的系统资源对这些线程进行管理。这样通过GCD来管理线程，从而解决线程被创建的问题。
@@ -328,7 +328,7 @@ GCD 能通过推迟昂贵">
 <li>Concurrency （并发）&amp; Parallelism（并行）</li>
 </ul>
 <p>并发代码的不同部分可以“同步”执行。然而，该怎样发生或是否发生都取决于系统。多核设备通过并行来同时执行多个线程；然而，为了使单核设备也能实现这一点，它们必须先运行一个线程，执行一个上下文切换，然后运行另一个线程或进程。这通常发生地足够快以致给我们并发执行地错觉。并行则是真正意思上的多任务同时运行。如下图所示：</p>
-<p><img src="/uploads/avatar.jpg" alt="MacDown logo"></p>
+<p><img src="/uploads/gcd/thread.jpg" alt="MacDown logo"></p>
 <p>虽然我们可以编写代码在GCD下并发执行，但GCD会决定有多少并行的需求。并行要求并发，但并不能保证并发。</p>
 <ul>
 <li>Context Switch （上下文切换）</li>
@@ -352,12 +352,12 @@ GCD 能通过推迟昂贵">
 <tbody>
 <tr>
 <td>Serial （串行队列，等待现在执行中处理结束）</td>
-<td>将任务以先进先出(FIFO)的顺序来执行，所以串行队列经常用来做访问某些特定资源的同步处理。你可以也根据需要创建多个队列，而这些队列相对其他队列都是并发执行的。换句话说，如果你创建了4个串行队列，每一个队列在同一时间都只执行一个任务，对这四个任务来说，他们是相互独立且并发执行的。如果需要创建串行队列，一般用<code>dispatch_queue_create</code>这个方法来实现。<img src="../../public/images/gcd/serial.png" alt="MacDown logo"> （1）这些任务这些任务的执行时机受到 GCD 的控制；唯一能确保的事情是 GCD 一次只执行一个任务，并且按照我们添加到队列的顺序来执行。（2）由于在串行队列中不会有两个任务并发运行，因此不会出现同时访问临界区的风险；相对于这些任务来说，这就从竞态条件下保护了临界区。所以如果访问临界区的唯一方式是通过提交到调度队列的任务，那么你就不需要担心临界区的安全问题了</td>
+<td>将任务以先进先出(FIFO)的顺序来执行，所以串行队列经常用来做访问某些特定资源的同步处理。你可以也根据需要创建多个队列，而这些队列相对其他队列都是并发执行的。换句话说，如果你创建了4个串行队列，每一个队列在同一时间都只执行一个任务，对这四个任务来说，他们是相互独立且并发执行的。如果需要创建串行队列，一般用<code>dispatch_queue_create</code>这个方法来实现。<img src="/uploads/gcd/serial.png" alt="MacDown logo"> （1）这些任务这些任务的执行时机受到 GCD 的控制；唯一能确保的事情是 GCD 一次只执行一个任务，并且按照我们添加到队列的顺序来执行。（2）由于在串行队列中不会有两个任务并发运行，因此不会出现同时访问临界区的风险；相对于这些任务来说，这就从竞态条件下保护了临界区。所以如果访问临界区的唯一方式是通过提交到调度队列的任务，那么你就不需要担心临界区的安全问题了</td>
 <td></td>
 </tr>
 <tr>
 <td>Concurrent （并发队列，不等待现在执行中处理结束）</td>
-<td>在并发队列中的任务能得到的保证是它们会按照被添加的顺序开始执行，但这就是全部的保证了。任务可能以任意顺序完成，你不会知道何时开始运行下一个任务，或者任意时刻有多少 Block 在运行。这完全取决于 GCD 。在iOS5之前，并发队列一般指的就是全局调度队列(Global Dispatch Queues)，进程中存在四个全局队列：background、low、default 以及 high四个优先级队列，可以调用<code>dispatch_get_global_queue</code>函数传入优先级来访问队列。而在iOS5之后，我们也可以用<code>dispatch_queue_create</code>，并指定队列类型<code>DISPATCH_QUEUE_CONCURRENT</code>，来自己创建一个并发队列。<img src="../../public/images/gcd/concurrent.png" alt="MacDown logo">   (1)注意 Block 1,2 和 3 都立马开始运行，一个接一个。在 Block 0 开始后，Block 1等待了好一会儿才开始。同样， Block 3 在 Block 2 之后才开始，但它先于 Block 2 完成。 (2)何时开始一个 Block 完全取决于 GCD 。如果一个 Block 的执行时间与另一个重叠，也是由 GCD 来决定是否将其运行在另一个不同的核心上，如果那个核心可用，否则就用上下文切换的方式来执行不同的 Block 。</td>
+<td>在并发队列中的任务能得到的保证是它们会按照被添加的顺序开始执行，但这就是全部的保证了。任务可能以任意顺序完成，你不会知道何时开始运行下一个任务，或者任意时刻有多少 Block 在运行。这完全取决于 GCD 。在iOS5之前，并发队列一般指的就是全局调度队列(Global Dispatch Queues)，进程中存在四个全局队列：background、low、default 以及 high四个优先级队列，可以调用<code>dispatch_get_global_queue</code>函数传入优先级来访问队列。而在iOS5之后，我们也可以用<code>dispatch_queue_create</code>，并指定队列类型<code>DISPATCH_QUEUE_CONCURRENT</code>，来自己创建一个并发队列。<img src="/uploads/gcd/concurrent.png" alt="MacDown logo">   (1)注意 Block 1,2 和 3 都立马开始运行，一个接一个。在 Block 0 开始后，Block 1等待了好一会儿才开始。同样， Block 3 在 Block 2 之后才开始，但它先于 Block 2 完成。 (2)何时开始一个 Block 完全取决于 GCD 。如果一个 Block 的执行时间与另一个重叠，也是由 GCD 来决定是否将其运行在另一个不同的核心上，如果那个核心可用，否则就用上下文切换的方式来执行不同的 Block 。</td>
 <td></td>
 </tr>
 <tr>
