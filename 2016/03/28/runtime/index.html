@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="CocoaPods," />
+  <meta name="keywords" content="Runtime," />
 
 
 
@@ -57,22 +57,28 @@
 
 
 
-<meta name="description" content="http://my.oschina.net/u/2299977/blog/487558
-http://www.jianshu.com/p/ee32eef74ba9
-http://www.cocoachina.com/ios/20141204/10528.html">
+<meta name="description" content="类与对象##成员变量与属性
+##方法与消息
+##Method Swizzling
+##协议与分类
+##拾遗">
 <meta property="og:type" content="article">
-<meta property="og:title" content="CocoaPods全解">
-<meta property="og:url" content="http://yoursite.com/2016/03/09/CocoaPods/index.html">
+<meta property="og:title" content="Runtime全解">
+<meta property="og:url" content="http://yoursite.com/2016/03/28/runtime/index.html">
 <meta property="og:site_name" content="一生只做浪漫极客">
-<meta property="og:description" content="http://my.oschina.net/u/2299977/blog/487558
-http://www.jianshu.com/p/ee32eef74ba9
-http://www.cocoachina.com/ios/20141204/10528.html">
-<meta property="og:updated_time" content="2016-03-11T14:17:32.000Z">
+<meta property="og:description" content="类与对象##成员变量与属性
+##方法与消息
+##Method Swizzling
+##协议与分类
+##拾遗">
+<meta property="og:updated_time" content="2016-03-28T07:56:55.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="CocoaPods全解">
-<meta name="twitter:description" content="http://my.oschina.net/u/2299977/blog/487558
-http://www.jianshu.com/p/ee32eef74ba9
-http://www.cocoachina.com/ios/20141204/10528.html">
+<meta name="twitter:title" content="Runtime全解">
+<meta name="twitter:description" content="类与对象##成员变量与属性
+##方法与消息
+##Method Swizzling
+##协议与分类
+##拾遗">
 
 
 
@@ -90,7 +96,7 @@ http://www.cocoachina.com/ios/20141204/10528.html">
   };
 </script>
 
-  <title> CocoaPods全解 | 一生只做浪漫极客 </title>
+  <title> Runtime全解 | 一生只做浪漫极客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -230,7 +236,7 @@ http://www.cocoachina.com/ios/20141204/10528.html">
             
             
               
-                CocoaPods全解
+                Runtime全解
               
             
           </h1>
@@ -242,8 +248,8 @@ http://www.cocoachina.com/ios/20141204/10528.html">
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-03-09T09:09:39+08:00" content="2016-03-09">
-              2016-03-09
+            <time itemprop="dateCreated" datetime="2016-03-28T15:51:22+08:00" content="2016-03-28">
+              2016-03-28
             </time>
           </span>
 
@@ -268,8 +274,8 @@ http://www.cocoachina.com/ios/20141204/10528.html">
 
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/iOS/CocoaPods/" itemprop="url" rel="index">
-                    <span itemprop="name">CocoaPods</span>
+                  <a href="/categories/iOS/Runtime/" itemprop="url" rel="index">
+                    <span itemprop="name">Runtime</span>
                   </a>
                 </span>
 
@@ -299,9 +305,11 @@ http://www.cocoachina.com/ios/20141204/10528.html">
       
 
       
-        <p><a href="http://my.oschina.net/u/2299977/blog/487558" target="_blank" rel="external">http://my.oschina.net/u/2299977/blog/487558</a></p>
-<p><a href="http://www.jianshu.com/p/ee32eef74ba9" target="_blank" rel="external">http://www.jianshu.com/p/ee32eef74ba9</a></p>
-<p><a href="http://www.cocoachina.com/ios/20141204/10528.html" target="_blank" rel="external">http://www.cocoachina.com/ios/20141204/10528.html</a></p>
+        <h2 id="类与对象"><a href="#类与对象" class="headerlink" title="类与对象"></a>类与对象</h2><p>##成员变量与属性</p>
+<p>##方法与消息</p>
+<p>##Method Swizzling</p>
+<p>##协议与分类</p>
+<p>##拾遗</p>
 
       
     </div>
@@ -310,7 +318,7 @@ http://www.cocoachina.com/ios/20141204/10528.html">
       
         <div class="post-tags">
           
-            <a href="/tags/CocoaPods/" rel="tag">#CocoaPods</a>
+            <a href="/tags/Runtime/" rel="tag">#Runtime</a>
           
         </div>
       
@@ -319,17 +327,13 @@ http://www.cocoachina.com/ios/20141204/10528.html">
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/03/08/ReactiveCocoa/" rel="next" title="ReactiveCocoa全解">
-                <i class="fa fa-chevron-left"></i> ReactiveCocoa全解
+              <a href="/2016/03/23/GCD/" rel="next" title="GCD 狂想曲之基本用法">
+                <i class="fa fa-chevron-left"></i> GCD 狂想曲之基本用法
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/03/23/GCD/" rel="prev" title="GCD 狂想曲之基本用法">
-                GCD 狂想曲之基本用法 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -472,7 +476,7 @@ http://www.cocoachina.com/ios/20141204/10528.html">
               
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#类与对象"><span class="nav-number">1.</span> <span class="nav-text">类与对象</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
