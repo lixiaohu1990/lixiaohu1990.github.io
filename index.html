@@ -313,14 +313,14 @@
 
       
         
-          
-            <h2 id="类与对象"><a href="#类与对象" class="headerlink" title="类与对象"></a>类与对象</h2><p>##成员变量与属性</p>
-<p>##方法与消息</p>
-<p>##Method Swizzling</p>
-<p>##协议与分类</p>
-<p>##拾遗</p>
-
-          
+          <h2 id="Runtime介绍"><a href="#Runtime介绍" class="headerlink" title="Runtime介绍"></a>Runtime介绍</h2><p>Objective-C语言是一门动态语言，它将很多静态语言在编译和链接时期做的事放到了运行时来处理。这种动态语言的优势在于：我们写代码时更具灵活性，如我们可以把消息转发给我们想要的对象，或者随意交换一个方法的实现等。</p>
+<p>这种特性意味着Objective-C不仅需要一个编译器，还需要一个运行时系统来执行编译的代码。对于Objective-C来说，这个运行时系统就像一个操作系统一样：它让所有的工作可以正常的运行。这个运行时系统即Objc Runtime。Objc Runtime其实是一个Runtime库，它基本上是用C和汇编写的，这个库使得C语言有了面向对象的能力。</p>
+<p>Objective-C runtime目前有两个版本：Modern runtime和Legacy runtime。Modern Runtime 覆盖了64位的Mac OS X Apps，还有 iOS Apps，Legacy Runtime 是早期用来给32位 Mac OS X Apps 用的，也就是可以不用管就是了。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/03/28/runtime/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
