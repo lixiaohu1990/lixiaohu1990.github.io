@@ -67,7 +67,7 @@
 传统的方式在发布版本前先把所有NSLog语句注释掉，等以后要调试时，再取消这些注释，这实在是一件无趣而耗时的事">
 <meta property="og:image" content="http://yoursite.com/uploads/jijing/debug.png">
 <meta property="og:image" content="http://yoursite.com/uploads/jijing/exchange.png">
-<meta property="og:updated_time" content="2016-04-13T03:37:15.000Z">
+<meta property="og:updated_time" content="2016-04-13T03:49:39.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS知识集锦之漂亮的NSLog">
 <meta name="twitter:description" content="前提在iOS开发过程中，我们经常要用到NSLog来打印一些调试信息，而且一般是习惯性的大量使用，在模拟器上运行可能没有感觉到什么，但是在真机上，这些NSLog的输出还是比较消耗系统资源的，而且输出的数据有时也可能会暴露出App中的某些私密数据，所以发布正式版时需要把这些输出全部屏蔽掉
@@ -321,10 +321,8 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">if</span> (MY_PROJECT_GLOBAL_CONTROL == <span class="number">0</span>)</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> STLog(fmt, ...) NSLog((@<span class="string">"=========\n[文件名:%s]\n"</span> <span class="string">"[函数名:%s]\n"</span> <span class="string">"[行号:%d] \n=========\n"</span> fmt), __FILE__, __FUNCTION__, __LINE__, ##__VA_ARGS__);</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> STDeBugLog(fmt, ...) NSLog((@<span class="string">"=========\n%s [Line %d] \n=========\n"</span> fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> NSLog(...) NSLog(__VA_ARGS__);</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> STNSLog(FORMAT, ...) fprintf(stderr,<span class="string">"=========\n[%s]:[line %d行]\n %s\n=========\n"</span>,[[[NSString stringWithUTF8String:__FILE__] lastPathComponent] UTF8String], __LINE__, [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#<span class="keyword">if</span> (MY_PROJECT_GLOBAL_CONTROL == <span class="number">1</span>)</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> STLog(...)</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> STDeBugLog(...)</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> NSLog(...)</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> STNSLog(FORMAT, ...) nil</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#<span class="keyword">if</span> (MY_PROJECT_GLOBAL_CONTROL == <span class="number">2</span>)</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> STLog(fmt, ...) NSLog((@<span class="string">"=========\n[文件名:%s]\n"</span> <span class="string">"[函数名:%s]\n"</span> <span class="string">"[行号:%d] \n=========\n"</span> fmt), __FILE__, __FUNCTION__, __LINE__, ##__VA_ARGS__);</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> STDeBugLog(fmt, ...) NSLog((@<span class="string">"=========\n%s [Line %d] \n=========\n"</span> fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> NSLog(...) NSLog(__VA_ARGS__);</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> STNSLog(FORMAT, ...) fprintf(stderr,<span class="string">"=========\n[%s]:[line %d行]\n %s\n=========\n"</span>,[[[NSString stringWithUTF8String:__FILE__] lastPathComponent] UTF8String], __LINE__, [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
 <p>条件编译不仅仅可以用在NSLog上，还可以用于NSAssert或者对应环境接口等的设置</p>
 <h2 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h2><ul>
-<li><p>VA_ARGS 是一个可变参数的宏，很少人知道这个宏，这个可变参数的宏是新的C99规范中新增的，目前似乎只有gcc支持（VC6.0的编译器不支持）。宏前面加上##的作用在于，当可变参数的个数为0时，这里的##起到把前面多余的”,”去掉的作用,否则会编译出错, 你可以试试。</p>
-</li>
-<li><p>FILE 宏在预编译时会替换成当前的源文件名</p>
-</li>
+<li>VA_ARGS 是一个可变参数的宏，很少人知道这个宏，这个可变参数的宏是新的C99规范中新增的，目前似乎只有gcc支持（VC6.0的编译器不支持）。宏前面加上##的作用在于，当可变参数的个数为0时，这里的##起到把前面多余的”,”去掉的作用,否则会编译出错, 你可以试试。</li>
+<li>FILE 宏在预编译时会替换成当前的源文件名</li>
 <li>LINE宏在预编译时会替换成当前的行号</li>
 <li>FUNCTION宏在预编译时会替换成当前的函数名称</li>
 </ul>
@@ -352,6 +350,10 @@
           </div>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/04/13/simpleFactory/" rel="prev" title="简单工厂模式">
+                简单工厂模式 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -419,7 +421,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">12</span>
+              <span class="site-state-item-count">16</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -427,7 +429,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-count">14</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -436,7 +438,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">15</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
