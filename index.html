@@ -209,6 +209,15 @@
 
     
     
+      
+      
+        
+        
+        
+      
+
+      
+    
 
     
       
@@ -358,7 +367,7 @@
               
                 
                 <a class="post-title-link" href="/2016/04/13/Design-principles/" itemprop="url">
-                  面向对象设计原则
+                  面向对象设计六大原则
                 </a>
               
             
@@ -430,20 +439,145 @@
       
         
           
-            <h2 id="1-单一职责原则（SRP）"><a href="#1-单一职责原则（SRP）" class="headerlink" title="1.单一职责原则（SRP）"></a>1.单一职责原则（SRP）</h2><p>就一个类而言，应该仅有一个引起它变化的原因，也就是一个类只负责一种职责的工作。</p>
-<h2 id="2-开放－封闭原则"><a href="#2-开放－封闭原则" class="headerlink" title="2.开放－封闭原则"></a>2.开放－封闭原则</h2><p>软件实体（类、模块、函数等等）应该可以扩展，但是不可修改。也就是说对于扩展是开放的，对于更改是封闭的。</p>
-<p>无论模块是多么的封闭，都会存在一些无法对之封闭的变化。既然不可能完全封闭，设计人员必须对于他设计的模块应该对哪种变化封闭做出选择。在最初编写代码的时候，假设变化不会发生，当变化发生时，就创建抽象来隔离以后发生的同类变化。</p>
-<p>面对需求，对程序的改动是通过增加新代码进行的，而不是更改现有的代码。</p>
-<h2 id="3-依赖倒转原则"><a href="#3-依赖倒转原则" class="headerlink" title="3.依赖倒转原则"></a>3.依赖倒转原则</h2><p>高层模块不应该依赖于低层模块，二者都应该依赖于抽象；抽象不应该依赖细节；细节应该依赖抽象。</p>
-<p>核心思想就是面向接口编程</p>
-<h2 id="4-里氏代换原则"><a href="#4-里氏代换原则" class="headerlink" title="4.里氏代换原则"></a>4.里氏代换原则</h2><p>子类必须能够替换成它们的基类。即：在一个软件系统中，子类应该可以替换任何基类能够出现的地方，并且经过替换以后，代码还能正常工作。</p>
-<p>里氏替换原则通俗的来讲就是：子类可以扩展父类的功能，但不能改变父类原有的功能。它包含以下2层含义：</p>
-<ul>
-<li>子类可以实现父类的抽象方法，但不能覆盖父类的非抽象方法；</li>
-<li>子类中可以增加自己特有的方法。</li>
+            <h2 id="1-单一职责原则（SRP）"><a href="#1-单一职责原则（SRP）" class="headerlink" title="1.单一职责原则（SRP）"></a>1.单一职责原则（SRP）</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>就一个类而言，应该仅有一个引起它变化的原因。通俗的说，即一个类只负责一项职责。</p>
+<h3 id="问题由来"><a href="#问题由来" class="headerlink" title="问题由来"></a>问题由来</h3><p>类T负责两个不同的职责：职责P1，职责P2。当由于职责P1需求发生改变而需要修改类T时，有可能会导致原本运行正常的职责P2功能发生故障。</p>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><p>遵循单一职责原则。分别建立两个类T1、T2，使T1完成职责P1功能，T2完成职责P2功能。这样，当修改类T1时，不会使职责P2发生故障风险；同理，当修改T2时，也不会使职责P1发生故障风险。</p>
+<p>说到单一职责原则，很多人都会不屑一顾。因为它太简单了。稍有经验的程序员即使从来没有读过设计模式、从来没有听说过单一职责原则，在设计软件时也会自觉的遵守这一重要原则，因为这是常识。在软件编程中，谁也不希望因为修改了一个功能导致其他的功能发生故障。而避免出现这一问题的方法便是遵循单一职责原则。虽然单一职责原则如此简单，并且被认为是常识，但是即便是经验丰富的程序员写出的程序，也会有违背这一原则的代码存在。为什么会出现这种现象呢？因为有职责扩散。<strong>所谓职责扩散，就是因为某种原因，职责P被分化为粒度更细的职责P1和P2。</strong></p>
+<p> 比如：类T只负责一个职责P，这样设计是符合单一职责原则的。后来由于某种原因，也许是需求变更了，也许是程序的设计者境界提高了，需要将职责P细分为粒度更细的职责P1，P2，这时如果要使程序遵循单一职责原则，需要将类T也分解为两个类T1和T2，分别负责P1、P2两个职责。但是在程序已经写好的情况下，这样做简直太费时间了。所以，简单的修改类T，用它来负责两个职责是一个比较不错的选择，虽然这样做有悖于单一职责原则。（这样做的风险在于职责扩散的不确定性，因为我们不会想到这个职责P，在未来可能会扩散为P1，P2，P3，P4……Pn。所以记住，在职责扩散到我们无法控制的程度之前，立刻对代码进行重构。）</p>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>员工的工资计算。刚开始的时候，我们会新建一个员工类，在员工类里面有一个计算工资的方法，代码如下所示：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Employee.h</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#import &lt;Foundation/Foundation.h&gt;</span></span><br><span class="line"></span><br><span class="line">@interface Employee : NSObject</span><br><span class="line"><span class="comment">//计算工资</span></span><br><span class="line">- (<span class="keyword">void</span>)calculateSalary:(NSString *)name;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line"><span class="comment">//Employee.m</span></span><br><span class="line"><span class="preprocessor">#import <span class="string">"Employee.h"</span></span></span><br><span class="line"></span><br><span class="line">@implementation Employee</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)calculateSalary:(NSString *)name&#123;</span><br><span class="line">    NSLog(@<span class="string">"%@ 的工资是 100"</span>, name);</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>调用代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Employee *employee = [[Employee alloc] init];</span><br><span class="line">[employee calculateSalary:@<span class="string">"张三"</span>];</span><br><span class="line">[employee calculateSalary:@<span class="string">"李四"</span>];</span><br></pre></td></tr></table></figure>
+<p>产品上线后，问题出来了，因为员工的岗位不同，工资的计算是不一样的。修改时如果遵循单一职责原则，需要将Employee类细分为总监类Director、经理类Manager、普通员工类Staff，这三个类的实现代码和Employee类一样，只是方法calculateSalary有所不同，调用方法如下所示：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Director *director = [[Director alloc] init];</span><br><span class="line">Manager *manager = [[Manager alloc] init];</span><br><span class="line">Staff *staff = [[Staff alloc] init];</span><br><span class="line">    </span><br><span class="line">[director calculateSalary:@<span class="string">"总监"</span>];</span><br><span class="line">[manager calculateSalary:@<span class="string">"经理"</span>];</span><br><span class="line">[staff calculateSalary:@<span class="string">"普通员工"</span>];</span><br></pre></td></tr></table></figure>
+<p>上面的修改方式是在遵循单一职责原则下进行的，从修改中，我们可以看到，这样修改的工作量相对较大，需要新增不同的岗位类，还需要修改调用代码。实际项目开发中，我们可能会采取如下两种方式：</p>
+<h4 id="方式一：直接修改Employee类里面的calculateSalary方法，在这里，我们需要对calculateSalary方法增加一个参数，以标识员工的岗位"><a href="#方式一：直接修改Employee类里面的calculateSalary方法，在这里，我们需要对calculateSalary方法增加一个参数，以标识员工的岗位" class="headerlink" title="方式一：直接修改Employee类里面的calculateSalary方法，在这里，我们需要对calculateSalary方法增加一个参数，以标识员工的岗位"></a>方式一：直接修改Employee类里面的calculateSalary方法，在这里，我们需要对calculateSalary方法增加一个参数，以标识员工的岗位</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)calculateSalary:(NSString *)name flag:(NSString *)flag&#123;</span><br><span class="line">    <span class="keyword">if</span> ([flag isEqualToString:@<span class="string">"Director"</span>])&#123;</span><br><span class="line">        NSLog(@<span class="string">"%@总监的工资是10000"</span>,name);</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span> ([flag isEqualToString:@<span class="string">"Manager"</span>])&#123;</span><br><span class="line">        NSLog(@<span class="string">"%@经理的工资是1000"</span>,name);</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span> ([flag isEqualToString:@<span class="string">"Staff"</span>])&#123;</span><br><span class="line">        NSLog(@<span class="string">"%@员工的工资是100"</span>,name);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>调用代码</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//    在代码级别上违法单一职责原则</span></span><br><span class="line">    Employee *employee = [[Employee alloc] init];</span><br><span class="line">    [employee calculateSalary:@<span class="string">"张三"</span> flag:@<span class="string">"Director"</span>];</span><br><span class="line">    [employee calculateSalary:@<span class="string">"李四"</span> flag:@<span class="string">"Manager"</span>];</span><br><span class="line">    [employee calculateSalary:@<span class="string">"王五"</span> flag:@<span class="string">"Staff"</span>];</span><br></pre></td></tr></table></figure>
+<p>从上面可以看到，这种修改方式相对要简单的多，是直接在代码级别上违背了单一职责原则，虽然修改起来最简单，但隐患却也是最大的。假设有一天需要将总监分为财务总监和研发总监，则又需要修改Employee类的calculateSalary方法，而对原有代码的修改会对已有功能带来风险(可能会存在遗漏或者疏忽)。</p>
+<h4 id="方式二："><a href="#方式二：" class="headerlink" title="方式二："></a>方式二：</h4><p>在Employee类中新增不同岗位的工资计算方法</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//在方法级别上违反单一职责原则</span></span><br><span class="line"><span class="comment">// 总监工资计算</span></span><br><span class="line">- (<span class="keyword">void</span>)directorCalculateSalary:(NSString *)name;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 经理工资计算</span></span><br><span class="line">- (<span class="keyword">void</span>)managerCalculateSalary:(NSString *)name;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 普通员工工资计算</span></span><br><span class="line">- (<span class="keyword">void</span>)staffCalculateSalary:(NSString *)name;</span><br></pre></td></tr></table></figure>
+<p>调用代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//    在方法级别上违法单一职责原则</span></span><br><span class="line">    Employee *employee = [[Employee alloc] init];</span><br><span class="line">    [employee directorCalculateSalary:@<span class="string">"张三"</span>];</span><br><span class="line">    [employee managerCalculateSalary:@<span class="string">"李四"</span>];</span><br><span class="line">    [employee staffCalculateSalary:@<span class="string">"王五"</span>];</span><br></pre></td></tr></table></figure>
+<p>可以看到，方式二没有改动原来的方法，而是在类中新加了三个方法，这样虽然也违背了单一职责原则，但在方法级别上却是符合单一职责原则，因为它并没有改变原来方法的代码。</p>
+<h3 id="示例总结"><a href="#示例总结" class="headerlink" title="示例总结"></a>示例总结</h3><p>只有逻辑足够简单，才可以在代码级别上违反单一职责原则；只有类中方法数量足够少，才可以在方法级别上违反单一职责原则；</p>
+<p>例如本文所举的这个例子，它太简单了，它只有一个方法，所以，无论是在代码级别上违反单一职责原则，还是在方法级别上违反，都不会造成太大的影响。实际应用中的类都要复杂的多，一旦发生职责扩散而需要修改类时，除非这个类本身非常简单，否则还是遵循单一职责原则的好。</p>
+<h3 id="遵循单一职责原的优点有："><a href="#遵循单一职责原的优点有：" class="headerlink" title="遵循单一职责原的优点有："></a>遵循单一职责原的优点有：</h3><ul>
+<li>可以降低类的复杂度，一个类只负责一项职责，其逻辑肯定要比负责多项职责简单的多；</li>
+<li>提高类的可读性，提高系统的可维护性；</li>
+<li>变更引起的风险降低，变更是必然的，如果单一职责原则遵守的好，当修改一个功能时，可以显著降低对其他功能的影响。</li>
 </ul>
-<p>如果非要重写父类里面的方法，比较通用的做法是：原来的父类和子类都继承一个更通用的基类，原有的继承关系去掉，采用依赖、聚合、组合等关系代替。</p>
-<p> 在项目中所有使用子类的地方都可用父类替换，但在调用方法的时候，即呈现面向对象编程的多态性。里氏替换原则，是非常重要的原则，也是相对较难的原则</p>
+<h2 id="2-里氏代换原则-LSP"><a href="#2-里氏代换原则-LSP" class="headerlink" title="2.里氏代换原则(LSP)"></a>2.里氏代换原则(LSP)</h2><h3 id="定义-1"><a href="#定义-1" class="headerlink" title="定义"></a>定义</h3><h4 id="定义1-如果对一个类型为T1的对象o1，都有类型为T2的对象o2，使得以T1所定义的程序P中在o1全都替换成o2时，程序的行为不发生任何变化，那么T2为T1的子类。"><a href="#定义1-如果对一个类型为T1的对象o1，都有类型为T2的对象o2，使得以T1所定义的程序P中在o1全都替换成o2时，程序的行为不发生任何变化，那么T2为T1的子类。" class="headerlink" title="定义1:如果对一个类型为T1的对象o1，都有类型为T2的对象o2，使得以T1所定义的程序P中在o1全都替换成o2时，程序的行为不发生任何变化，那么T2为T1的子类。"></a>定义1:如果对一个类型为T1的对象o1，都有类型为T2的对象o2，使得以T1所定义的程序P中在o1全都替换成o2时，程序的行为不发生任何变化，那么T2为T1的子类。</h4><h4 id="定义2-所有引用父类的地方都必须能够透明地使用其子类对象。"><a href="#定义2-所有引用父类的地方都必须能够透明地使用其子类对象。" class="headerlink" title="定义2:所有引用父类的地方都必须能够透明地使用其子类对象。"></a>定义2:所有引用父类的地方都必须能够透明地使用其子类对象。</h4><h3 id="定义解读"><a href="#定义解读" class="headerlink" title="定义解读"></a>定义解读</h3><p>所有父类出现的地方，子类都可以出现，并且将父类对象替换为子类对象的时候，程序不会抛出任何异常或者错误，因此我们需要注意的是，尽量不要重载或者重写父类的方法(抽象方法除外)，因为这样可能会改变父类原有的行为。</p>
+<h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><ul>
+<li>代码共享，减少创建类的工作量，每个子类都拥有父类的所有属性和方法；</li>
+<li>提高代码的可重用性；</li>
+<li>提高代码的可扩张性；</li>
+<li>提高产品或项目的开放性。</li>
+</ul>
+<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><ul>
+<li>继承是入侵性的，拥有父类的属性和方法；</li>
+<li>降低代码的灵活性，必须拥有父类的属性和方法；</li>
+<li>增强耦合性，父类属性或方法改变，需要考虑子类。</li>
+</ul>
+<h3 id="问题由来-1"><a href="#问题由来-1" class="headerlink" title="问题由来"></a>问题由来</h3><p>有一功能P1，由类A完成。现需要将功能P1进行扩展，扩展后的功能为P，其中P由原有功能P1与新功能P2组成。新功能P由类A的子类B来完成，则子类B在完成新功能P2的同时，有可能会导致原有功能P1发生故障。</p>
+<h3 id="解决方案-1"><a href="#解决方案-1" class="headerlink" title="解决方案"></a>解决方案</h3><p>当使用继承时，遵循里氏替换原则。类B继承类A时，除添加新的方法完成新增功能P2外，尽量不要重写父类A的方法，也尽量不要重载父类A的方法。</p>
+<p>继承包含这样一层含义：父类中凡是已经实现好的方法（相对于抽象方法而言），实际上是在设定一系列的规范和契约，虽然它不强制要求所有的子类必须遵从这些契约，但是如果子类对这些非抽象方法任意修改，就会对整个继承体系造成破坏。而里氏替换原则就是表达了这一层含义。</p>
+<p>继承作为面向对象三大特性之一，在给程序设计带来巨大便利的同时，也带来了弊端。比如使用继承会给程序带来侵入性，程序的可移植性降低，增加了对象间的耦合性，如果一个类被其他的类所继承，则当这个类需要修改时，必须考虑到所有的子类，并且父类修改后，所有涉及到子类的功能都有可能会产生故障。</p>
+<h3 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a>示例</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#import &lt;Foundation/Foundation.h&gt;</span></span><br><span class="line"></span><br><span class="line">@interface Employee2 : NSObject</span><br><span class="line">- (<span class="keyword">void</span>)calculateSalary:(NSString *)name;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#import <span class="string">"Employee2.h"</span></span></span><br><span class="line">@implementation Employee2</span><br><span class="line">- (<span class="keyword">void</span>)calculateSalary:(NSString *)name</span><br><span class="line">&#123;</span><br><span class="line">    NSLog(@<span class="string">"%@的工资是100"</span>,name);</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>为Employee类添加一个子类总监Director类，该类新增了一个职责说明的方法和重写了calculateSalary方法</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#import &lt;Foundation/Foundation.h&gt;</span></span><br><span class="line"><span class="preprocessor">#import <span class="string">"Employee2.h"</span></span></span><br><span class="line">@interface Director2 : Employee2</span><br><span class="line"><span class="comment">// 职责</span></span><br><span class="line">- (<span class="keyword">void</span>)duty;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#import <span class="string">"Director2.h"</span></span></span><br><span class="line"></span><br><span class="line">@implementation Director2</span><br><span class="line">- (<span class="keyword">void</span>)calculateSalary:(NSString *)name</span><br><span class="line">&#123;</span><br><span class="line">    NSLog(@<span class="string">"总监%@的工资是10000"</span>,name);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)duty</span><br><span class="line">&#123;</span><br><span class="line">    NSLog(@<span class="string">"总监的职责是管理"</span>);</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>调用代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//    里氏变换原则</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 如果Director类(子类)重写了计算工资的方法,则调用子类的calculateSalary方法,此时就会破坏父类原有的行为</span></span><br><span class="line">    Employee2 *emp = [[Director2 alloc] init];<span class="comment">//将所有父类出现的地方都替换成子类</span></span><br><span class="line">    [emp calculateSalary:@<span class="string">"张三"</span>];</span><br></pre></td></tr></table></figure>
+<p>由于重写了父类Employee的calculateSalary方法，造成计算薪资的方法都是调用子类Director重写后的方法。如果应用场景是要求公司的薪资都是统一的，那么调用Director类重写的方法就是不正确的。如果非要重写父类里面的方法，比较通用的做法是：<strong>原来的父类和子类都继承一个更通用的基类，原有的继承关系去掉，采用依赖、聚合、组合等关系代替</strong>。</p>
+<p>里氏替换原则通俗的来讲就是：子类可以扩展父类的功能，但不能改变父类原有的功能。它包含以下4层含义：</p>
+<ul>
+<li>子类可以实现父类的抽象方法，但不能覆盖父类的非抽象方法。</li>
+<li>子类中可以增加自己特有的方法。</li>
+<li>当子类的方法重载父类的方法时，方法的前置条件（即方法的形参）要比父类方法的输入参数更宽松。(对于父类的合法输入，对于子类一定合法)</li>
+<li>当子类的方法实现父类的抽象方法时，方法的后置条件（即方法的返回值）要比父类更严格。(子类的输出，一定被父类的输出包括)</li>
+</ul>
+<h2 id="3-依赖倒转原则-DIP"><a href="#3-依赖倒转原则-DIP" class="headerlink" title="3.依赖倒转原则(DIP)"></a>3.依赖倒转原则(DIP)</h2><h3 id="定义-2"><a href="#定义-2" class="headerlink" title="定义"></a>定义</h3><p>高层模块不应该依赖于低层模块，二者都应该依赖于抽象；</p>
+<p>抽象不应该依赖细节；细节应该依赖抽象。</p>
+<h3 id="定义解读-1"><a href="#定义解读-1" class="headerlink" title="定义解读"></a>定义解读</h3><p>依赖倒置原则在程序编码中经常运用，其核心思想就是面向接口编程，高层模块不应该依赖低层模块(原子操作的模块)，两者都应该依赖于抽象。我们平时常说的“针对接口编程，不要针对实现编程”就是依赖倒转原则的最好体现：接口（也可以是抽象类）就是一种抽象，只要不修改接口声明，大家可以放心大胆调用，至于接口的内部实现则无需关心，可以随便重构。这里，接口就是抽象，而接口的实现就是细节。</p>
+<p>如果不管高层模块还是底层模块，它们都依赖于抽象，具体一点就是接口或者抽象类，只要接口是稳定的，那么任何一个的更改都不用担心其他受到影响，这就使得无论高层模块还是低层模块都可以很容易地被复用。</p>
+<p><img src="/uploads/moshi/DIP.png" alt="dip"></p>
+<h3 id="优点-1"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h3><p>代码结构清晰，维护容易</p>
+<h3 id="问题由来-2"><a href="#问题由来-2" class="headerlink" title="问题由来"></a>问题由来</h3><p>类A直接依赖类B，假如需要将类A改为依赖类C，则必须通过修改类A的代码来达成。这种场景下，类A一般是高层模块，负责复杂的业务逻辑；类B和类C是低层模块，负责基本的原子操作；假如修改类A，会给程序带来不必要的风险。</p>
+<h3 id="解决方案-2"><a href="#解决方案-2" class="headerlink" title="解决方案"></a>解决方案</h3><p>将类A修改为依赖接口I，类B和类C各自实现接口I，类A通过接口I间接与类B或者类C发生联系，则会大大降低修改类A的几率</p>
+<p>依赖倒置原则基于这样一个事实：相对于细节的多变性，抽象的东西要稳定的多。以抽象为基础搭建起来的架构比以细节为基础搭建起来的架构要稳定的多。在C#/Java中，抽象指的是接口或者抽象类；在Objective-C中，抽象指的是委托，细节就是具体的实现类，使用接口或者抽象类的目的是制定好规范和契约，而不去涉及任何具体的操作，把展现细节的任务交给它们的实现类去完成。</p>
+<h3 id="示例-2"><a href="#示例-2" class="headerlink" title="示例"></a>示例</h3><p>类SalaryManage(类似上面说的类A)负责工资的管理；Director(类似上面说的类B)是总监类，现在我们要通过SalaryManage类来给总监发放工资了，主要代码片段如下所示：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//  Director3.m</span></span><br><span class="line">- (<span class="keyword">void</span>)calculateSalary</span><br><span class="line">&#123;</span><br><span class="line">    NSLog(@<span class="string">"%@总监的工资是10000"</span>,_strName);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//  SalaryManage.m</span></span><br><span class="line">- (<span class="keyword">void</span>)calculateSalary:(Director3 *)director&#123;</span><br><span class="line">    [director calculateSalary];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>调用代码</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//    原始方法</span></span><br><span class="line">    Director3 *director3 = [[Director3 alloc] init];</span><br><span class="line">    director3.strName = @<span class="string">"张三"</span>;</span><br><span class="line">    SalaryManage *salaryManager = [[SalaryManage alloc] init];</span><br><span class="line">    [salaryManager calculateSalary:director3];</span><br></pre></td></tr></table></figure>
+<p>这样给总监发放工资的功能已经很好的实现了，现在假设需要给经理发工资，我们发现工资管理类SalaryManage没法直接完成这个功能，需要我们添加新的方法，才能完成。再假设我们还需要给普通员工、财务总监、研发总监等更多的岗位发送工资，那么我们就只能不断的去修改SalaryManage类来满足业务的需求。产生这种现象的原因就是SalaryManage与Director之间的耦合性太高了，必须降低它们之间的耦合度才行。</p>
+<p>因此我们引入一个委托EmployeeDelegate，它提供一个发放工资的方法定义，如下所示：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#import &lt;Foundation/Foundation.h&gt;</span></span><br><span class="line"></span><br><span class="line">@protocol EmployeeDelegate &lt;NSObject&gt;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)calculateSalary;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>调用代码</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//    遵从依赖倒转原则</span></span><br><span class="line">    </span><br><span class="line">    Director3 *director3 = [[Director3 alloc] init];</span><br><span class="line">    director3.strName = @<span class="string">"张三"</span>;</span><br><span class="line">    </span><br><span class="line">    Manager3 *manager3 = [[Manager3 alloc] init];</span><br><span class="line">    manager3.strName = @<span class="string">"李四"</span>;</span><br><span class="line">    </span><br><span class="line">    SalaryManage *salaryManager = [[SalaryManage alloc] init];</span><br><span class="line">    </span><br><span class="line">    [salaryManager calculateSalary:director3];</span><br><span class="line">    [salaryManager calculateSalary:manager3];</span><br></pre></td></tr></table></figure>
+<p>这样修改后，无论以后怎样扩展其他的岗位，都不需要再修改SalaryManage类了。代表高层模块的SalaryManage类将负责完成主要的业务逻辑(发工资)，如果需要对SalaryManage类进行修改，引入错误的风险极大。所以遵循依赖倒置原则可以降低类之间的耦合性，提高系统的稳定性，降低修改程序造成的风险。</p>
+<p>传递依赖关系有三种方式，以上的例子中使用的方法是接口传递，另外还有两种传递方式：构造方法传递和setter方法传递</p>
+<p><strong>在实际编程中，我们一般需要做到如下3点：</strong></p>
+<ul>
+<li>低层模块尽量都要有抽象类或接口，或者两者都有。</li>
+<li>变量的声明类型尽量是抽象类或接口。</li>
+<li>使用继承时遵循里氏替换原则。</li>
+</ul>
+<p><strong>依赖倒置原则的核心就是要我们面向接口编程，理解了面向接口编程，也就理解了依赖倒置。</strong></p>
+<h2 id="4-接口隔离原则-ISP"><a href="#4-接口隔离原则-ISP" class="headerlink" title="4.接口隔离原则(ISP)"></a>4.接口隔离原则(ISP)</h2><h3 id="定义-3"><a href="#定义-3" class="headerlink" title="定义"></a>定义</h3><p>客户端不应该依赖它不需要的接口；</p>
+<p> 一个类对另一个类的依赖应该建立在最小的接口上。</p>
+<h3 id="定义解读-2"><a href="#定义解读-2" class="headerlink" title="定义解读"></a>定义解读</h3><ul>
+<li>一个类对另一个类的依赖应该建立在最小的接口上</li>
+<li>一个接口代表一个角色，不应该将不同的角色都交给一个接口，因为这样可能会形成一个臃肿的大接口</li>
+<li>不应该强迫客户依赖它们从来不用的方法</li>
+</ul>
+<p>接口隔离原则有点像单一职责原则，但是也有区别，在单一职责原则中，一个接口可能有多个方法，提供给多种不同的调用者所调用，但是它们始终完成同一种功能，因此它们符合单一职责原则，却不符合接口隔离原则，因为这个接口存在着多种角色，因此可以拆分成更多的子接口，以供不同的调用者所调用。比如说，项目中我们通常有一个Web服务管理的类，接口定义中，我们可能会将所有模块的数据调用方法都在接口中进行定义，因为它们都完成的是同一种功能：和服务器进行数据交互；但是对于具体的业务功能模块来说，其他模块的数据调用方法它们从来不会使用，因此不符合接口隔离原则。</p>
+<h3 id="优点-2"><a href="#优点-2" class="headerlink" title="优点"></a>优点</h3><p>使用接口隔离原则，意在设计一个短而小的接口和类，符合我们常说的高内聚低耦合的设计思想，从而使得类具有很好的可读性、可扩展性和可维护性。</p>
+<h3 id="问题由来-3"><a href="#问题由来-3" class="headerlink" title="问题由来"></a>问题由来</h3><p>类A通过接口I依赖类B，类C通过接口I依赖类D，如果接口I对于类A和类C来说不是最小接口，而类B和类D必须去实现它们不需要的方法。<br><img src="/uploads/moshi/unuseisp.png" alt="dip"><br>在这里，定义了一个动物活动的接口IAnimal，里面有4个方法：飞行fly、行走walk、吃eat和工作work，然后分别用人类People和鸟类Bird实现了这个接口。中国人类ChinesePeople和鹦鹉类Parrot通过接口IAnimal分别依赖类People和类Bird。很明显，对于ChinesePeople来说，fly方法是多余的，因为人不会飞；对于Parrot类来说，work方法是多余的，因为鹦鹉不需要工作。接口IAnimal对于类ChinesePeople和类Parrot来说不是最小接口。</p>
+<h3 id="解决方案-3"><a href="#解决方案-3" class="headerlink" title="解决方案"></a>解决方案</h3><p>将臃肿的接口IAnimal拆分为独立的几个接口，类ChinesePeople和类Parrot分别与它们需要的接口建立依赖关系，也就是采用接口隔离原则。修改后的UML图如下所示：<br><img src="/uploads/moshi/useisp.png" alt="dip"></p>
+<p><strong>说明：</strong></p>
+<ul>
+<li>接口隔离原则的含义是：<strong>建立单一接口，不要建立庞大臃肿的接口，尽量细化接口，接口中的方法尽量少。</strong>也就是说，我们要为各个类建立专用的接口，而不要试图去建立一个很庞大的接口供所有依赖它的类去调用。从UML图可以看到，遵守接口隔离原则，会使代码量增加不少；</li>
+<li>实际上，IOS在定义协议的时候，可以设置方法为可选实现(@optional)和必须实现(@required，默认值)，我们可以设置work方法和fly方法为可选实现的方法，这样在类People和类Bird中，这两个方法可以根据需要来决定是否实现。采用这种方式，功能上实现是没有问题，对于简单的接口来说，也便于维护和管理。</li>
+<li>但是，当方法随着业务需求的增加而不断增加的话，如果我们不应用接口隔离原则，那么就可能形成一个庞大臃肿的接口，这样的接口的可维护性和重用性是很差的。</li>
+<li>因此，我们应该尽量细化接口，例如将一个接口变更为3个专用的接口所采用的就是接口隔离原则。在项目开发中，依赖几个专用的接口要比依赖一个综合的接口更加灵活。通过分散定义多个接口，可以预防外来变更的扩散，提高系统的灵活性和可维护性。</li>
+<li>很多人会觉的接口隔离原则跟之前的单一职责原则很相似，其实不然。其一，单一职责原则原注重的是职责；而接口隔离原则注重对接口依赖的隔离。其二，单一职责原则主要是约束类，其次才是接口和方法，它针对的是程序中的实现和细节；而接口隔离原则主要约束接口接口，主要针对抽象，针对程序整体框架的构建</li>
+</ul>
+<h3 id="采用接口隔离原则对接口进行约束时，要注意以下几点："><a href="#采用接口隔离原则对接口进行约束时，要注意以下几点：" class="headerlink" title="采用接口隔离原则对接口进行约束时，要注意以下几点："></a>采用接口隔离原则对接口进行约束时，要注意以下几点：</h3><ul>
+<li>接口尽量小，但是要有限度。对接口进行细化可以提高程序设计灵活性是不挣的事实，但是如果过小，则会造成接口数量过多，使设计复杂化。所以一定要适度。</li>
+<li>为依赖接口的类定制服务，只暴露给调用的类它需要的方法，它不需要的方法则隐藏起来。只有专注地为一个模块提供定制服务，才能建立最小的依赖关系。</li>
+<li>提高内聚，减少对外交互。使接口用最少的方法去完成最多的事情</li>
+</ul>
+<h2 id="5-迪米特法则-LOD"><a href="#5-迪米特法则-LOD" class="headerlink" title="5. 迪米特法则(LOD)"></a>5. 迪米特法则(LOD)</h2><h3 id="定义-4"><a href="#定义-4" class="headerlink" title="定义"></a>定义</h3><p><strong>狭义的迪米特法则定义：</strong>也叫最少知识原则(LKP，Least Knowledge Principle)。如果两个类不必彼此直接通信，那么这两个类就不应当发生直接的相互作用。如果其中的一个类需要调用另一个类的某一个方法的话，可以通过第三者转发这个调用。</p>
+<p><strong>广义的迪米特法则定义：</strong>一个模块设计得好坏的一个重要的标志就是该模块在多大的程度上将自己的内部数据与实现有关的细节隐藏起来。信息的隐藏非常重要的原因在于，它可以使各个子系统之间脱耦，从而允许它们独立地被开发、优化、使用阅读以及修改。</p>
+<h3 id="定义解读-3"><a href="#定义解读-3" class="headerlink" title="定义解读"></a>定义解读</h3><p>迪米特法则通常被表述为：Only talk to your immediate friends ( 只和离你最近的朋友进行交互)。什么是最近的朋友？我们知道，每个对象都会与其他对象之间有耦合关系，只要两个对象之间有耦合关系，我们就说这两个对象之间是朋友关系。耦合的方式很多，如依赖、关联、组合、聚合等。其中，我们称出现在成员变量、方法参数、方法返回值中的类为最近的朋友，而出现在局部变量中的类则不是最近的朋友。迪米特法则是很好的解耦合手段之一。</p>
+<h3 id="优点-3"><a href="#优点-3" class="headerlink" title="优点"></a>优点</h3><p>迪米特法则使对象之间的耦合降到最小，符合高内聚低耦合的特性，从而使得类具有很好的可读性和可维护性。</p>
+<p>外观模式（Facade）和中介者模式（Mediator），都是迪米特法则应用的例子</p>
+<h3 id="问题由来-4"><a href="#问题由来-4" class="headerlink" title="问题由来"></a>问题由来</h3><p>类与类之间的关系越密切，耦合度越大，当一个类发生改变时，对另一个类的影响也越大。</p>
+<h3 id="解决方案-4"><a href="#解决方案-4" class="headerlink" title="解决方案"></a>解决方案</h3><p>使用迪米特法则，降低类与类之间的耦合。</p>
+<h3 id="示例-3"><a href="#示例-3" class="headerlink" title="示例"></a>示例</h3><p>示例中有犯人、亲人、狱友这些对象，接下来我就通过三个亲人去监狱看犯人的设计来说明如何理解迪米特法则<br><img src="/uploads/moshi/unuselod.png" alt="dip"><br>从上面可以看到，家人告诉犯人要与狱友好好相处，而狱友却冒出来说话。这显然越界了，因为监狱只允许家人探望犯人，而不是随便谁都可以见。而家人和狱友有了沟通是违背迪米特法则的，所以我们需要将家人和狱友隔离开，对其进行重构。<br><img src="/uploads/moshi/uselod.png" alt="dip"></p>
+<p><img src="/uploads/moshi/withdip.png" alt="dip"><br>从上面看到，和依赖倒置原则相结合之后的设计，也是符合迪米特原则的：如果两个类不必彼此直接通信，那么这两个类就不应当发生直接的相互作用。如果其中的一个类需要调用另一个类的某一个方法的话，可以通过第三者转发这个调用，这里的第三者就是接口InmatesDelegate。</p>
+<p><strong>说明：</strong></p>
+<ul>
+<li><p>迪米特法则的初衷是降低类之间的耦合，由于每个类都减少了不必要的依赖，因此的确可以降低耦合关系。但是凡事都有度，虽然可以避免与非直接的类通信，但是要通信，必然会通过一个“中介”来发生联系。</p>
+</li>
+<li><p>过分的使用迪米特原则，会产生大量这样的中介和传递类，导致系统复杂度变大。所以在采用迪米特法则时要反复权衡，既做到结构清晰，又要高内聚低耦合。</p>
+</li>
+</ul>
+<h2 id="6-开放－封闭原则"><a href="#6-开放－封闭原则" class="headerlink" title="6.开放－封闭原则"></a>6.开放－封闭原则</h2><h3 id="定义-5"><a href="#定义-5" class="headerlink" title="定义"></a>定义</h3><p>一个软件实体(如类、模块、函数)应当对扩展开放，对修改关闭</p>
+<h3 id="定义解读-4"><a href="#定义解读-4" class="headerlink" title="定义解读"></a>定义解读</h3><p>开放-封闭原则的思想就是设计的时候，尽量让设计的类做好后就不再修改，如果有新的需求，通过新加类的方式来满足，而不去修改现有的类(代码)。那么在实际的项目开发中，是否能做到绝对的对修改关闭呢？答案一般也是否定的。既然这样，那么就要求我们在开发前，去找出变化点，然后针对变化点构造抽象，隔离出这些变化。由此可见，实现开闭原则关键是抽象。</p>
+<h3 id="优点-4"><a href="#优点-4" class="headerlink" title="优点"></a>优点</h3><ul>
+<li>具有灵活性，通过拓展一个功能模块即可实现功能的扩充，不需修改内部代码</li>
+<li>具有稳定性，表现在基本功能类不允许被修改，使得被破坏的程度大大下降</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>前面说的5项原则，恰恰是告诉我们<strong>用抽象构建框架，用实现扩展细节</strong>的注意事项而已：</p>
+<ul>
+<li>单一职责原则告诉我们实现类要职责单一；</li>
+<li>里氏替换原则告诉我们不要破坏继承体系；</li>
+<li>依赖倒置原则告诉我们要面向接口编程；</li>
+<li>接口隔离原则告诉我们在设计接口的时候要精简单一；</li>
+<li>迪米特法则告诉我们要降低耦合。</li>
+<li>而开闭原则是总纲，他告诉我们要对扩展开放，对修改关闭。</li>
+</ul>
 
           
         
