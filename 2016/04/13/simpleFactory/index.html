@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="工厂模式," />
+  <meta name="keywords" content="创建型模式," />
 
 
 
@@ -57,25 +57,19 @@
 
 
 
-<meta name="description" content="概述简单工厂模式不属于23种GOF设计模式之一。它也称作静态工厂方法模式，是工厂方法模式的特殊实现
-定义“专门定义一个类来负责创建其他类的实例，被创建的实例常常具有共同的父类。”
-实际上就是由一个工厂类，根据传入的参数，动态的决定创建出哪一个产品类的实例。
-设计原则遵循单一职责 、违背开闭原则(生成不同对象，需要实现不同的工厂类，扩展性不好)">
+<meta name="description" content="概述工厂模式是最常用的一类创建型设计模式，通常我们所说的工厂模式是指工厂方法模式，它也是使用频率最高的工厂模式。简单工厂模式是工厂方法模式的“小弟”，它不属于GoF 23种设计模式，但在软件开发中应用也较为频繁，通常将它作为学习其他工厂模式的入门。此外，工厂方法模式还有一位“大哥”——抽象工厂模式。这三种工厂模式各具特色，难度也逐个加大，在软件开发中它们都得到了广泛的应用，成为面向对象软件中常用的">
 <meta property="og:type" content="article">
-<meta property="og:title" content="简单工厂模式">
+<meta property="og:title" content="工厂三人帮之简单工厂模式">
 <meta property="og:url" content="http://yoursite.com/2016/04/13/simpleFactory/index.html">
 <meta property="og:site_name" content="一生只做浪漫极客">
-<meta property="og:description" content="概述简单工厂模式不属于23种GOF设计模式之一。它也称作静态工厂方法模式，是工厂方法模式的特殊实现
-定义“专门定义一个类来负责创建其他类的实例，被创建的实例常常具有共同的父类。”
-实际上就是由一个工厂类，根据传入的参数，动态的决定创建出哪一个产品类的实例。
-设计原则遵循单一职责 、违背开闭原则(生成不同对象，需要实现不同的工厂类，扩展性不好)">
-<meta property="og:updated_time" content="2016-04-14T06:27:30.000Z">
+<meta property="og:description" content="概述工厂模式是最常用的一类创建型设计模式，通常我们所说的工厂模式是指工厂方法模式，它也是使用频率最高的工厂模式。简单工厂模式是工厂方法模式的“小弟”，它不属于GoF 23种设计模式，但在软件开发中应用也较为频繁，通常将它作为学习其他工厂模式的入门。此外，工厂方法模式还有一位“大哥”——抽象工厂模式。这三种工厂模式各具特色，难度也逐个加大，在软件开发中它们都得到了广泛的应用，成为面向对象软件中常用的">
+<meta property="og:image" content="http://yoursite.com/uploads/moshi/simplefactory1.png">
+<meta property="og:image" content="http://yoursite.com/uploads/moshi/simplefactory2.png">
+<meta property="og:image" content="http://yoursite.com/uploads/moshi/simplefactory3.png">
+<meta property="og:updated_time" content="2016-04-17T08:26:23.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="简单工厂模式">
-<meta name="twitter:description" content="概述简单工厂模式不属于23种GOF设计模式之一。它也称作静态工厂方法模式，是工厂方法模式的特殊实现
-定义“专门定义一个类来负责创建其他类的实例，被创建的实例常常具有共同的父类。”
-实际上就是由一个工厂类，根据传入的参数，动态的决定创建出哪一个产品类的实例。
-设计原则遵循单一职责 、违背开闭原则(生成不同对象，需要实现不同的工厂类，扩展性不好)">
+<meta name="twitter:title" content="工厂三人帮之简单工厂模式">
+<meta name="twitter:description" content="概述工厂模式是最常用的一类创建型设计模式，通常我们所说的工厂模式是指工厂方法模式，它也是使用频率最高的工厂模式。简单工厂模式是工厂方法模式的“小弟”，它不属于GoF 23种设计模式，但在软件开发中应用也较为频繁，通常将它作为学习其他工厂模式的入门。此外，工厂方法模式还有一位“大哥”——抽象工厂模式。这三种工厂模式各具特色，难度也逐个加大，在软件开发中它们都得到了广泛的应用，成为面向对象软件中常用的">
 
 
 
@@ -93,7 +87,7 @@
   };
 </script>
 
-  <title> 简单工厂模式 | 一生只做浪漫极客 </title>
+  <title> 工厂三人帮之简单工厂模式 | 一生只做浪漫极客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -233,7 +227,7 @@
             
             
               
-                简单工厂模式
+                工厂三人帮之简单工厂模式
               
             
           </h1>
@@ -302,10 +296,74 @@
       
 
       
-        <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>简单工厂模式不属于23种GOF设计模式之一。它也称作静态工厂方法模式，是工厂方法模式的特殊实现</p>
-<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>“专门定义一个类来负责创建其他类的实例，被创建的实例常常具有共同的父类。”</p>
-<p>实际上就是由一个工厂类，根据传入的参数，动态的决定创建出哪一个产品类的实例。</p>
-<h2 id="设计原则"><a href="#设计原则" class="headerlink" title="设计原则"></a>设计原则</h2><p>遵循单一职责 、违背开闭原则(生成不同对象，需要实现不同的工厂类，扩展性不好)</p>
+        <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>工厂模式是最常用的一类创建型设计模式，通常我们所说的工厂模式是指<strong>工厂方法模式</strong>，它也是使用频率最高的工厂模式。简单工厂模式是工厂方法模式的“小弟”，它不属于GoF 23种设计模式，但在软件开发中应用也较为频繁，通常将它作为学习其他工厂模式的入门。此外，工厂方法模式还有一位“大哥”——抽象工厂模式。这三种工厂模式各具特色，难度也逐个加大，在软件开发中它们都得到了广泛的应用，成为面向对象软件中常用的创建对象的工具。</p>
+<a id="more"></a>
+<h2 id="简单工厂模式"><a href="#简单工厂模式" class="headerlink" title="简单工厂模式"></a>简单工厂模式</h2><h3 id="1-图表库的设计"><a href="#1-图表库的设计" class="headerlink" title="1.图表库的设计"></a>1.图表库的设计</h3><blockquote>
+<p>Sunny软件公司欲开发一套图表库，该图表库可以为应用系统提供各种不同外观的图表，例如柱状图、饼状图、折线图等。Sunny软件公司图表库设计人员希望为应用系统开发人员提供一套灵活易用的图表库，而且可以较为方便地对图表库进行扩展，以便能够在将来增加一些新类型的图表</p>
+</blockquote>
+<p>Sunny软件公司图表库设计人员提出了一个初始设计方案，将所有图表的实现代码封装在一个Chart类中，其框架代码如下所示：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#import <span class="string">"Chat.h"</span></span></span><br><span class="line"></span><br><span class="line">@implementation Chat&#123;</span><br><span class="line">    NSString *_type;</span><br><span class="line">&#125;</span><br><span class="line">- (instancetype)initWithType:(NSString *)type&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (self = [super init]) &#123;</span><br><span class="line">        _type = type;</span><br><span class="line">        <span class="keyword">if</span> ([type isEqualToString:@<span class="string">"histogram"</span>]) &#123;</span><br><span class="line">            <span class="comment">//初始化柱状图</span></span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span> ([type isEqualToString:@<span class="string">"histogram"</span>])&#123;</span><br><span class="line">            <span class="comment">//初始化饼状图</span></span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span> ([type isEqualToString:@<span class="string">"histogram"</span>])&#123;</span><br><span class="line">            <span class="comment">//初始化折线图</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">   </span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> nil;<span class="comment">//假装是nil</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)display&#123;</span><br><span class="line">    <span class="keyword">if</span> ([_type isEqualToString:@<span class="string">"histogram"</span>]) &#123;</span><br><span class="line">        <span class="comment">//显示柱状图</span></span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span> ([_type isEqualToString:@<span class="string">"histogram"</span>])&#123;</span><br><span class="line">        <span class="comment">//显示饼状图</span></span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span> ([_type isEqualToString:@<span class="string">"histogram"</span>])&#123;</span><br><span class="line">        <span class="comment">//显示折线图</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>客户端代码通过调用Chart类的构造函数来创建图表对象，根据参数type的不同可以得到不同类型的图表，然后再调用display()方法来显示相应的图表</p>
+<p><strong>不难看出，Chart类是一个“巨大的”类，在该类的设计中存在如下几个问题：</strong></p>
+<ul>
+<li>在Chart类中包含很多“if…else…”代码块，整个类的代码相当冗长，代码越长，阅读难度、维护难度和测试难度也越大；而且大量条件语句的存在还将影响系统的性能，程序在执行过程中需要做大量的条件判断</li>
+<li>Chart类的职责过重，它负责初始化和显示所有的图表对象，将各种图表对象的初始化代码和显示代码集中在一个类中实现，违反了“单一职责原则”，不利于类的重用和维护；而且将大量的对象初始化代码都写在构造函数中将导致构造函数非常庞大，对象在创建时需要进行条件判断，降低了对象创建的效率</li>
+<li>当需要增加新类型的图表时，必须修改Chart类的源代码，违反了“开闭原则”</li>
+<li>Chart类与客户端类耦合度较高，对象的创建和使用无法分离</li>
+<li>客户端在创建Chart对象之前可能还需要进行大量初始化设置，例如设置柱状图的颜色、高度等，如果在Chart类的构造函数中没有提供一个默认设置，那就只能由客户端来完成初始设置，这些代码在每次创建Chart对象时都会出现，导致代码的重复。</li>
+</ul>
+<p>面对一个如此巨大、职责如此重，且与客户端代码耦合度非常高的类，我们应该怎么办？<strong>简单工厂模式将在一定程度上解决上述问题</strong></p>
+<h3 id="2-简单工厂模式概述"><a href="#2-简单工厂模式概述" class="headerlink" title="2.简单工厂模式概述"></a>2.简单工厂模式概述</h3><p>简单工厂模式并不属于GoF 23个经典设计模式，但通常将它作为学习其他工厂模式的基础，它的设计思想很简单，其基本流程如下：</p>
+<ul>
+<li>首先将需要创建的各种不同对象（例如各种不同的Chart对象）的相关代码封装到不同的类中，这些类称为具体产品类，而将它们公共的代码进行抽象和提取后封装在一个抽象产品类中，每一个具体产品类都是抽象产品类的子类；</li>
+<li>然后提供一个工厂类用于创建各种产品，在工厂类中提供一个创建产品的工厂方法，该方法可以根据所传入的参数不同创建不同的具体产品对象</li>
+<li>客户端只需调用工厂类的工厂方法并传入相应的参数即可得到一个产品对象。</li>
+</ul>
+<p><strong>工厂模式的定义：</strong></p>
+<blockquote>
+<p>定义一个工厂类，它可以根据参数的不同返回不同类的实例，被创建的实例通常都具有共同的父类。因为在简单工厂模式中用于创建实例的方法是静态(static)方法，因此简单工厂模式又被称为静态工厂方法(Static Factory Method)模式，它属于类创建型模式。</p>
+<p>简单工厂模式的要点在于：当你需要什么，只需要传入一个正确的参数，就可以获取你所需要的对象，而无须知道其创建细节。简单工厂模式结构比较简单，其核心是工厂类的设计</p>
+</blockquote>
+<p><img src="/uploads/moshi/simplefactory1.png" alt="simplefactory"></p>
+<p><strong>在简单工厂模式结构图中包含如下几个角色：</strong></p>
+<ul>
+<li>Factory（工厂角色）：工厂角色即工厂类，它是简单工厂模式的核心，负责实现创建所有产品实例的内部逻辑；工厂类可以被外界直接调用，创建所需的产品对象；在工厂类中提供了静态的工厂方法factoryMethod()，它的返回类型为抽象产品类型Product。</li>
+<li>Product（抽象产品角色）：它是工厂类所创建的所有对象的父类，封装了各种产品对象的公有方法，它的引入将提高系统的灵活性，使得在工厂类中只需定义一个通用的工厂方法，因为所有创建的具体产品对象都是其子类对象。</li>
+<li>ConcreteProduct（具体产品角色）：它是简单工厂模式的创建目标，所有被创建的对象都充当这个角色的某个具体类的实例。每一个具体产品角色都继承了抽象产品角色，需要实现在抽象产品中声明的抽象方法。</li>
+</ul>
+<p>在简单工厂模式中，客户端通过工厂类来创建一个产品类的实例，而无须直接使用new关键字来创建对象，它是工厂模式家族中最简单的一员。</p>
+<p>在使用简单工厂模式时，首先需要对产品类进行重构，<strong>不能设计一个包罗万象的产品类，而需根据实际情况设计一个产品层次结构</strong>，将所有产品类公共的代码移至抽象产品类，并在抽象产品类中声明一些抽象方法，以供不同的具体产品类来实现，典型的抽象产品类代码如下所示：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#import &lt;Foundation/Foundation.h&gt;</span></span><br><span class="line"></span><br><span class="line">@interface Product : NSObject</span><br><span class="line"></span><br><span class="line"><span class="comment">//所有产品类的公共业务方法</span></span><br><span class="line">- (<span class="keyword">void</span>)methodSame;</span><br><span class="line"></span><br><span class="line"><span class="comment">//声明抽象业务方法</span></span><br><span class="line">- (<span class="keyword">void</span>)methodDiff;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#import <span class="string">"Product.h"</span></span></span><br><span class="line"></span><br><span class="line">@implementation Product</span><br><span class="line">- (<span class="keyword">void</span>)methodSame&#123;</span><br><span class="line">    <span class="comment">//实现公共的业务方法</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>在具体产品类中实现了抽象产品类中声明的抽象业务方法，不同的具体产品类可以提供不同的实现，典型的具体产品类代码如下所示：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#import <span class="string">"ConcreteProduct.h"</span></span></span><br><span class="line"></span><br><span class="line">@implementation ConcreteProduct</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)methodDiff&#123;</span><br><span class="line"><span class="comment">//    实现业务方法</span></span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>简单工厂模式的核心是工厂类，在没有工厂类之前，客户端一般会使用new关键字来直接创建产品对象，而在引入工厂类之后，客户端可以通过工厂类来创建产品，在简单工厂模式中，工厂类提供了一个静态工厂方法供客户端使用，根据所传入的参数不同可以创建不同的产品对象，典型的工厂类代码如下所示：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#import <span class="string">"Factory.h"</span></span></span><br><span class="line"><span class="preprocessor">#import <span class="string">"ConcreteProduct.h"</span></span></span><br><span class="line">@implementation Factory</span><br><span class="line">+ (Product *)getProductWithtype:(NSString *)type&#123;</span><br><span class="line">    Product *product = nil;</span><br><span class="line">    <span class="keyword">if</span> ([type isEqualToString:@<span class="string">"A"</span>]) &#123;</span><br><span class="line">        <span class="comment">//初始化设置product</span></span><br><span class="line">        product = [[ConcreteProduct alloc] init];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> product;</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>在客户端代码中，我们通过调用工厂类的工厂方法即可得到产品对象，典型代码如下所示：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//通过工厂方法创建产品</span></span><br><span class="line">    Product *product = [Factory getProductWithtype:@<span class="string">"A"</span>];</span><br><span class="line">    [product methodSame];</span><br><span class="line">    [product methodDiff];</span><br></pre></td></tr></table></figure>
+<h3 id="3-完整解决方案"><a href="#3-完整解决方案" class="headerlink" title="3.完整解决方案"></a>3.完整解决方案</h3><p><img src="/uploads/moshi/simplefactory2.png" alt="simplefactory"> </p>
+<h3 id="4-简单工厂模式的简化"><a href="#4-简单工厂模式的简化" class="headerlink" title="4.简单工厂模式的简化"></a>4.简单工厂模式的简化</h3><p>有时候，为了简化简单工厂模式，我们可以将抽象产品类和工厂类合并，将静态工厂方法移至抽象产品类中，如图所示：<br><img src="/uploads/moshi/simplefactory3.png" alt="simplefactory"> </p>
+<p>客户端可以通过产品父类的静态工厂方法，根据参数的不同创建不同类型的产品子类对象</p>
+<h3 id="5-简单工厂模式总结"><a href="#5-简单工厂模式总结" class="headerlink" title="5.简单工厂模式总结"></a>5.简单工厂模式总结</h3><blockquote>
+<p>简单工厂模式提供了专门的工厂类用于创建对象，将对象的创建和对象的使用分离开，它作为一种最简单的工厂模式在软件开发中得到了较为广泛的应用。</p>
+</blockquote>
+<p><strong>主要优点</strong></p>
+<ul>
+<li>工厂类包含必要的判断逻辑，可以决定在什么时候创建哪一个产品类的实例，客户端可以免除直接创建产品对象的职责，而仅仅“消费”产品，简单工厂模式实现了对象创建和使用的分离。</li>
+<li>客户端无须知道所创建的具体产品类的类名，只需要知道具体产品类所对应的参数即可，对于一些复杂的类名，通过简单工厂模式可以在一定程度减少使用者的记忆量。</li>
+<li>通过引入配置文件，可以在不修改任何客户端代码的情况下更换和增加新的具体产品类，在一定程度上提高了系统的灵活性。</li>
+</ul>
+<p><strong>主要缺点</strong></p>
+<ul>
+<li>由于工厂类集中了所有产品的创建逻辑，职责过重，一旦不能正常工作，整个系统都要受到影响。</li>
+<li>使用简单工厂模式势必会增加系统中类的个数（引入了新的工厂类），增加了系统的复杂度和理解难度</li>
+<li>系统扩展困难，一旦添加新产品就不得不修改工厂逻辑，在产品类型较多时，有可能造成工厂逻辑过于复杂，不利于系统的扩展和维护</li>
+<li>简单工厂模式由于使用了静态工厂方法，造成工厂角色无法形成基于继承的等级结构</li>
+</ul>
+<p><strong>适用场景</strong></p>
+<ul>
+<li>工厂类负责创建的对象比较少，由于创建的对象较少，不会造成工厂方法中的业务逻辑太过复杂</li>
+<li>客户端只知道传入工厂类的参数，对于如何创建对象并不关心</li>
+</ul>
 
       
     </div>
@@ -314,7 +372,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/工厂模式/" rel="tag">#工厂模式</a>
+            <a href="/tags/创建型模式/" rel="tag">#创建型模式</a>
           
         </div>
       
@@ -476,7 +534,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定义"><span class="nav-number">2.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设计原则"><span class="nav-number">3.</span> <span class="nav-text">设计原则</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简单工厂模式"><span class="nav-number">2.</span> <span class="nav-text">简单工厂模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-图表库的设计"><span class="nav-number">2.1.</span> <span class="nav-text">1.图表库的设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-简单工厂模式概述"><span class="nav-number">2.2.</span> <span class="nav-text">2.简单工厂模式概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-完整解决方案"><span class="nav-number">2.3.</span> <span class="nav-text">3.完整解决方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-简单工厂模式的简化"><span class="nav-number">2.4.</span> <span class="nav-text">4.简单工厂模式的简化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-简单工厂模式总结"><span class="nav-number">2.5.</span> <span class="nav-text">5.简单工厂模式总结</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
