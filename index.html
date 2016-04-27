@@ -209,6 +209,15 @@
 
     
     
+      
+      
+        
+        
+        
+      
+
+      
+    
 
     
       
@@ -1134,8 +1143,7 @@
 
       
         
-          
-            <p>GCD Queue 分为三种：</p>
+          <p>GCD Queue 分为三种：</p>
 <ul>
 <li><code>The main queue</code>  ：主队列，主线程就是在个队列中</li>
 <li><code>Global queues</code> ： 全局并发队列</li>
@@ -1149,19 +1157,11 @@
 <p>GCD 确实好用 ，很强大，相比NSOpretion 无法提供 取消任务的功能。</p>
 <p>如此强大的工具用不好可能会出现线程死锁。 如下代码：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// demo1：</span></span><br><span class="line"></span><br><span class="line"> - (<span class="keyword">void</span>)viewDidLoad</span><br><span class="line">&#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    NSLog(@<span class="string">"=================1"</span>);</span><br><span class="line">    dispatch_sync(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">        NSLog(@<span class="string">"=================2"</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">    NSLog(@<span class="string">"=================3"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>分析这段代码造成死锁的原因：</p>
-<p>viewDidLoad 在主线程中并且在<code>dispatch_get_main_queue()</code> 中，执行到sync 时向<code>dispatch_get_main_queue()</code>插入同步threed1，sync 会等到后面block 执行完成才返回， sync 又在 <code>dispatch_get_main_queue()</code> 队列中，它是串行队列，sync 是后加入的，前一个是主线程，所以 sync 想执行 block 必须等待主线程执行完成，而主线程又等待 sync 返回才能去执行后续内容。<br>由此造成了死锁，sync 等待mainThread 执行完成， mianThread 等待sync 函数返回。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// demo2</span></span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)viewDidLoad</span><br><span class="line">&#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line"></span><br><span class="line">    dispatch_async(dispatch_get_global_queue(<span class="number">0</span>, <span class="number">0</span>), ^&#123;</span><br><span class="line">    dispatch_sync(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">    	NSLog(@<span class="string">"=====sync===="</span>);</span><br><span class="line">   &#125;);</span><br><span class="line">    NSLog(@<span class="string">"=====main queue===="</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上面的这段代码会执行完成，并不会出现死锁的情况</p>
-<ul>
-<li>1、async 在主线程中创建了一个异步线程并将任务加入到了全局并发队列，async不会等待block执行完成，立即返回</li>
-<li>2、随着async的立即返回，viewDidLoad执行完毕，以及主线程执行完毕</li>
-<li>3、同时全局并发队列立即执行异步block，当执行到sync它就会等待block执行完成才会返回，而sync则等待主队列中的main thread 执行完成，然后才开始调用block</li>
-<li>4、因为2和3几乎是同时执行的，因为3在全局并发队列上， 3执行到sync的时候1可能已经执行完或者需要等一会main thread执行完毕退出，sync执行内部block</li>
-</ul>
-<p>但是如果阻塞了主线程的话，demo2就会造成死锁导致sync就无法执行了，main thread永远不会退出，sync就会永远等待着</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//demo3</span></span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)viewDidLoad</span><br><span class="line">&#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line"></span><br><span class="line">    dispatch_async(dispatch_get_global_queue(<span class="number">0</span>, <span class="number">0</span>), ^&#123;</span><br><span class="line">    dispatch_sync(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">    	NSLog(@<span class="string">"=====sync===="</span>);</span><br><span class="line">   &#125;);</span><br><span class="line">    NSLog(@<span class="string">"=====main queue===="</span>);</span><br><span class="line">&#125;);</span><br><span class="line">  <span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">  </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/03/31/gcd-deadLock/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
